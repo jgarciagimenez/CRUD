@@ -2,6 +2,10 @@
 
 from gi.repository import Gtk
 
+import MySQLdb
+
+Conexion = MySQLdb.connect(host='localhost', user='jose',passwd='cine', db='DBdePeliculas')
+micursor = Conexion.cursor(MySQLdb.cursors.DictCursor)
 
 
 
@@ -38,6 +42,12 @@ class Handler:
         self.entry_DB_5 = self.builder.get_object("entry_DB_5")
         self.entry_DB_6 = self.builder.get_object("entry_DB_6")
 
+        self.entry1 = self.builder.get_object("entry1")        
+        self.entry2 = self.builder.get_object("entry2")
+        self.entry3 = self.builder.get_object("entry3")        
+        self.entry4 = self.builder.get_object("entry4")
+        self.entry5 = self.builder.get_object("entry5")        
+
         self.window.show_all()
 
    
@@ -62,6 +72,17 @@ class Handler:
 
     def on_btn_accept_clicked_RD(self,*args):
 
+
+        ID = self.entry_RD.get_text() 
+        query= "SELECT * FROM Victimas WHERE id=" + ID + ";"
+        registro= micursor.fetchone()
+
+        self.entry1.set_text(registro[1])
+        self.entry2.set_text(registro[2])
+        self.entry3.set_text(registro[3])
+        self.entry4.set_text(registro[4])
+        self.entry5.set_text(registro[5])
+
         self.entry_RD.set_text('')
         self.dia_RD.hide()
         
@@ -73,6 +94,17 @@ class Handler:
         
 
     def on_btn_accept_clicked_CU(self,*args):
+
+        ID = self.entry_DB_1.get_text() 
+        Titulo = self.entry_DB_2.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
+        year = self.entry_DB_3.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
+        Director = self.entry_DB_4.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
+        Nacion = self.entry_DB_5.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
+        Nota = self.entry_DB_6.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
+
+        query = "INSERT INTO Peliculas (id,Titulo,Año,Director,Nacionalidad,Nota) VALUES (" + ID + ",'" + Titulo + "'," + year + ",'" + Director +"','" + Nacion +"'," + Nota + ");"
+
+        micursor.execute(query)
 
         self.entry_DB_1.set_text('') 
         self.entry_DB_2.set_text('') 
@@ -97,6 +129,7 @@ class Handler:
  
 
     def on_Close_Dia_CU(self):
+
 
         self.entry_DB_1.set_text('') 
         self.entry_DB_2.set_text('') 
