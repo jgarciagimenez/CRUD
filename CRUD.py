@@ -32,7 +32,10 @@ class Handler:
                           "on_Update_Activate": self.on_Update_Activate,
                           "on_Read_Activate": self.on_Read_Activate,
                           "on_Delete_Activate": self.on_Delete_Activate,
+                          "on_About_Activate": self.on_About_Activate,
                           "on_Close_Dia_CU": self.on_Close_Dia_CU,
+                          "on_Close_dia_error_1": self.on_Close_dia_error_1,
+                          "on_Close_dia_error_ID": self.on_Close_dia_error_ID,
                           "on_Close_Dia_RD": self.on_Close_Dia_RD }
    
 
@@ -40,7 +43,10 @@ class Handler:
         self.builder.connect_signals(self.handlers)
         self.window = self.builder.get_object("window")
         self.dia_CU = self.builder.get_object("dia_CU")
-        self.dia_RD = self.builder.get_object("dia_RD")       
+        self.dia_RD = self.builder.get_object("dia_RD")  
+        self.about_dialog = self.builder.get_object("about_dialog") 
+        self.dia_error_1 = self.builder.get_object("dia_error_1")    
+        self.dia_error_ID = self.builder.get_object("dia_error_ID")  
         self.entry_RD = self.builder.get_object("entry_RD")
         self.entry_DB_1 = self.builder.get_object("entry_DB_1")
         self.entry_DB_2 = self.builder.get_object("entry_DB_2")           
@@ -62,6 +68,9 @@ class Handler:
         print 'Se ha cerrado la ventana'
         Gtk.main_quit(*args)
 
+    def on_About_Activate(self,*args):
+
+        self.about_dialog.show()
 
     def on_Create_Activate(self, *args):
 
@@ -103,7 +112,7 @@ class Handler:
         self.entry3.set_text('')
         self.entry4.set_text('')
         self.entry5.set_text('')
-        
+
         self.Delete = True
         self.dia_RD.show()
 
@@ -113,6 +122,11 @@ class Handler:
 
 
         ID = self.entry_RD.get_text()
+
+        if not ID.isdigit() or not Nota.isdigit() or not year.isdigit():
+            self.dia_error_1.show()
+            return  
+
 
         if  self.Read:
 
@@ -154,20 +168,36 @@ class Handler:
         Nacion = self.entry_DB_5.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
         Nota = self.entry_DB_6.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
 
-        print 'añlsdkfñlasdkjfalñskdjfasd:' + str(self.Create)
+        if not ID.isdigit() or not Nota.isdigit() or not year.isdigit():
+
+            self.dia_error_1.show()
+
+            return  
 
         if self.Create:
-            print 'He entrado al bucleasdfaswefasdf'
+
+            query= "SELECT * FROM Peliculas WHERE id="+ID+";"
+            micursor.execute(query)
+            registro= micursor.fetchone()
+
+            if registro is not None:
+
+                self.dia_error_ID.show()
+
+                return
+
             query = "INSERT INTO Peliculas (id,Titulo,Fecha,Director,Nacionalidad,Nota) VALUES (" + str(ID) + ",'" + Titulo + "'," +str(year) + ",'" + Director +"','" + Nacion +"'," + str(Nota) + ");"
+            micursor.execute(query)
+            Conexion.commit()
             self.Create = False
 
         if self.Update:
 
             query = "UPDATE Peliculas SET Titulo='"+Titulo+"', Fecha="+str(year)+", Director='"+Director+"', Nacionalidad='"+Nacion+"', Nota="+str(Nota)+" WHERE id="+str(ID)+";"
             self.Update = False
-
-        micursor.execute(query)
-        Conexion.commit()
+            micursor.execute(query)
+            Conexion.commit()
+        
 
         self.entry_DB_1.set_text('') 
         self.entry_DB_2.set_text('') 
@@ -189,7 +219,7 @@ class Handler:
         self.entry_DB_6.set_text('')   
 
         self.dia_CU.hide()    
- 
+
 
     def on_Close_Dia_CU(self):
 
@@ -208,6 +238,15 @@ class Handler:
 
         self.entry_RD.set_text('')
         self.dia_RD.hide()
+
+
+    def on_Close_dia_error_1(self,*args):
+
+        self.dia_error_1.hide()
+
+    def on_Close_dia_error_ID(self,*args):
+
+        self.dia_error_ID.hide()
 
 
 def main():
