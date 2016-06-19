@@ -13,7 +13,14 @@ class Handler:
 
     Builder = None
 
+
     def __init__(self):
+        
+        self.Create = None        
+        self.Read = None       
+        self.Update = None        
+        self.Delete = None
+
         self.builder = Gtk.Builder()
         self.builder.add_from_file("menu_CRUD.glade")
         self.handlers = { "on_window_destroy": self.on_window_destroy,
@@ -57,15 +64,47 @@ class Handler:
 
 
     def on_Create_Activate(self, *args):
+
+        self.entry1.set_text('')
+        self.entry2.set_text('')
+        self.entry3.set_text('')
+        self.entry4.set_text('')
+        self.entry5.set_text('')
+
+        self.Create = True
         self.dia_CU.show()
 
     def on_Update_Activate(self, *args):
+
+        self.entry1.set_text('')
+        self.entry2.set_text('')
+        self.entry3.set_text('')
+        self.entry4.set_text('')
+        self.entry5.set_text('')
+
+        self.Update = True
         self.dia_CU.show()
 
     def on_Read_Activate(self, *args):
+
+        self.entry1.set_text('')
+        self.entry2.set_text('')
+        self.entry3.set_text('')
+        self.entry4.set_text('')
+        self.entry5.set_text('')
+
+        self.Read = True
         self.dia_RD.show()
 
     def on_Delete_Activate(self, *args):
+
+        self.entry1.set_text('')
+        self.entry2.set_text('')
+        self.entry3.set_text('')
+        self.entry4.set_text('')
+        self.entry5.set_text('')
+        
+        self.Delete = True
         self.dia_RD.show()
 
 
@@ -73,15 +112,28 @@ class Handler:
     def on_btn_accept_clicked_RD(self,*args):
 
 
-        ID = self.entry_RD.get_text() 
-        query= "SELECT * FROM Victimas WHERE id=" + ID + ";"
-        registro= micursor.fetchone()
+        ID = self.entry_RD.get_text()
 
-        self.entry1.set_text(registro[1])
-        self.entry2.set_text(registro[2])
-        self.entry3.set_text(registro[3])
-        self.entry4.set_text(registro[4])
-        self.entry5.set_text(registro[5])
+        if  self.Read:
+
+            query= "SELECT * FROM Peliculas WHERE id=" + ID + ";"
+            micursor.execute(query)
+            registro= micursor.fetchone()
+
+            self.entry1.set_text(registro['Titulo'])
+            self.entry2.set_text(str(registro['Fecha']))
+            self.entry3.set_text(registro['Director'])
+            self.entry4.set_text(registro['Nacionalidad'])
+            self.entry5.set_text(str(registro['Nota']))
+
+            self.Read = False
+
+        if self.Delete:
+
+            query= "DELETE FROM Peliculas WHERE id="+str(ID)+";"
+            micursor.execute(query)
+            Conexion.commit()
+            self.Delete = False
 
         self.entry_RD.set_text('')
         self.dia_RD.hide()
@@ -102,9 +154,20 @@ class Handler:
         Nacion = self.entry_DB_5.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
         Nota = self.entry_DB_6.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
 
-        query = "INSERT INTO Peliculas (id,Titulo,Año,Director,Nacionalidad,Nota) VALUES (" + ID + ",'" + Titulo + "'," + year + ",'" + Director +"','" + Nacion +"'," + Nota + ");"
+        print 'añlsdkfñlasdkjfalñskdjfasd:' + str(self.Create)
+
+        if self.Create:
+            print 'He entrado al bucleasdfaswefasdf'
+            query = "INSERT INTO Peliculas (id,Titulo,Fecha,Director,Nacionalidad,Nota) VALUES (" + str(ID) + ",'" + Titulo + "'," +str(year) + ",'" + Director +"','" + Nacion +"'," + str(Nota) + ");"
+            self.Create = False
+
+        if self.Update:
+
+            query = "UPDATE Peliculas SET Titulo='"+Titulo+"', Fecha="+str(year)+", Director='"+Director+"', Nacionalidad='"+Nacion+"', Nota="+str(Nota)+" WHERE id="+str(ID)+";"
+            self.Update = False
 
         micursor.execute(query)
+        Conexion.commit()
 
         self.entry_DB_1.set_text('') 
         self.entry_DB_2.set_text('') 

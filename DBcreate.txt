@@ -5,5 +5,5 @@ GRANT ALL ON DBdePeliculas.* TO 'jose'@'localhost' IDENTIFIED BY 'cine';
 
 USE DBdePeliculas;
 
-CREATE TABLE Peliculas (id INT, Titulo VARCHAR(255),Año INT,Director VARCHAR(255),Nacionalidad VARCHAR(255),Nota INT);
+CREATE TABLE Peliculas (id INT, Titulo VARCHAR(255),Fecha INT,Director VARCHAR(255),Nacionalidad VARCHAR(255),Nota INT);
 
