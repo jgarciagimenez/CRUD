@@ -6,6 +6,7 @@
     <property name="can_focus">False</property>
     <property name="window_position">mouse</property>
     <property name="type_hint">dialog</property>
+    <signal name="destroy" handler="on_Close_about_dialog" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox4">
         <property name="can_focus">False</property>
@@ -16,7 +17,18 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <placeholder/>
+              <object class="GtkButton" id="button3">
+                <property name="label" translatable="yes">Aceptar</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_accept_dialog" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
               <placeholder/>
@@ -107,6 +119,7 @@ El programa hace lo que se conoce como CRUD
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
     <property name="type_hint">dialog</property>
+    <signal name="destroy" handler="on_Close_dia_CU" swapped="no"/>
     <signal name="response" handler="on_Close_Dia_CU" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox3">
@@ -334,6 +347,7 @@ El programa hace lo que se conoce como CRUD
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
     <property name="type_hint">dialog</property>
+    <signal name="destroy" handler="on_Close_dia_RD" swapped="no"/>
     <signal name="response" handler="on_Close_Dia_RD" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
@@ -424,6 +438,7 @@ El programa hace lo que se conoce como CRUD
     <property name="can_focus">False</property>
     <property name="window_position">mouse</property>
     <property name="type_hint">normal</property>
+    <signal name="destroy" handler="on_Close_dia_error_1" swapped="no"/>
     <signal name="response" handler="on_Close_dia_error_1" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox5">
@@ -435,7 +450,18 @@ El programa hace lo que se conoce como CRUD
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <placeholder/>
+              <object class="GtkButton" id="button1">
+                <property name="label" translatable="yes">Aceptar</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_accept_error_1" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
               <placeholder/>
@@ -498,6 +524,7 @@ revisa el formato de los datos
     <property name="can_focus">False</property>
     <property name="window_position">mouse</property>
     <property name="type_hint">normal</property>
+    <signal name="destroy" handler="on_Close_dia_error_ID" swapped="no"/>
     <signal name="response" handler="on_Close_dia_error_ID" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox6">
@@ -509,7 +536,18 @@ revisa el formato de los datos
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <placeholder/>
+              <object class="GtkButton" id="button2">
+                <property name="label" translatable="yes">Accept</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_accept_error_ID" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
               <placeholder/>

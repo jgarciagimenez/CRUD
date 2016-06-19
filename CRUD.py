@@ -28,12 +28,16 @@ class Handler:
                           "on_btn_cancel_clicked_RD": self.on_btn_cancel_clicked_RD,
                           "on_btn_accept_clicked_CU": self.on_btn_accept_clicked_CU,
                           "on_btn_cancel_clicked_CU": self.on_btn_cancel_clicked_CU,
+                          "on_accept_dialog": self.on_accept_dialog,
+                          "on_accept_error_1": self.on_accept_error_1,
+                          "on_accept_error_ID": self.on_accept_error_ID,
                           "on_Create_Activate": self.on_Create_Activate,
                           "on_Update_Activate": self.on_Update_Activate,
                           "on_Read_Activate": self.on_Read_Activate,
                           "on_Delete_Activate": self.on_Delete_Activate,
                           "on_About_Activate": self.on_About_Activate,
                           "on_Close_Dia_CU": self.on_Close_Dia_CU,
+                          "on_Close_about_dialog": self.on_Close_about_dialog,
                           "on_Close_dia_error_1": self.on_Close_dia_error_1,
                           "on_Close_dia_error_ID": self.on_Close_dia_error_ID,
                           "on_Close_Dia_RD": self.on_Close_Dia_RD }
@@ -123,10 +127,16 @@ class Handler:
 
         ID = self.entry_RD.get_text()
 
-        if not ID.isdigit() or not Nota.isdigit() or not year.isdigit():
-            self.dia_error_1.show()
-            return  
 
+        query= "SELECT * FROM Peliculas WHERE id="+ID+";"
+        micursor.execute(query)
+        registro= micursor.fetchone()
+
+        if registro is None:
+
+            self.dia_error_ID.show()
+
+            return
 
         if  self.Read:
 
@@ -162,11 +172,11 @@ class Handler:
     def on_btn_accept_clicked_CU(self,*args):
 
         ID = self.entry_DB_1.get_text() 
-        Titulo = self.entry_DB_2.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
-        year = self.entry_DB_3.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
-        Director = self.entry_DB_4.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
-        Nacion = self.entry_DB_5.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
-        Nota = self.entry_DB_6.get_text() ## Tengo que elegir la base de datos y poner los nombres bien
+        Titulo = self.entry_DB_2.get_text() 
+        year = self.entry_DB_3.get_text() 
+        Director = self.entry_DB_4.get_text() 
+        Nacion = self.entry_DB_5.get_text() 
+        Nota = self.entry_DB_6.get_text() 
 
         if not ID.isdigit() or not Nota.isdigit() or not year.isdigit():
 
@@ -234,7 +244,17 @@ class Handler:
         self.dia_CU.hide()
 
 
-    def on_Close_Dia_RD(self):
+    def on_accept_dialog(self,*args):
+        self.about_dialog.hide()
+
+    def on_accept_error_1(self,*args):
+        self.dia_error_1.hide()
+
+    def on_accept_error_ID(self,*args):
+        self.dia_error_ID.hide()
+
+
+    def on_Close_Dia_RD(self,*args):
 
         self.entry_RD.set_text('')
         self.dia_RD.hide()
@@ -247,6 +267,10 @@ class Handler:
     def on_Close_dia_error_ID(self,*args):
 
         self.dia_error_ID.hide()
+
+    def on_Close_about_dialog(self,*args):
+
+        self.about_dialog.hide()
 
 
 def main():
