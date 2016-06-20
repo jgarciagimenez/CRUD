@@ -28,15 +28,17 @@ class Handler:
                           "on_btn_cancel_clicked_RD": self.on_btn_cancel_clicked_RD,
                           "on_btn_accept_clicked_CU": self.on_btn_accept_clicked_CU,
                           "on_btn_cancel_clicked_CU": self.on_btn_cancel_clicked_CU,
+                          "on_accept_error_ID": self.on_accept_error_ID,
                           "on_accept_dialog": self.on_accept_dialog,
                           "on_accept_error_1": self.on_accept_error_1,
-                          "on_accept_error_ID": self.on_accept_error_ID,
+                          "on_accept_error_ID2": self.on_accept_error_ID2,
                           "on_Create_Activate": self.on_Create_Activate,
                           "on_Update_Activate": self.on_Update_Activate,
                           "on_Read_Activate": self.on_Read_Activate,
                           "on_Delete_Activate": self.on_Delete_Activate,
                           "on_About_Activate": self.on_About_Activate,
                           "on_Close_Dia_CU": self.on_Close_Dia_CU,
+                          "on_Close_no_ID": self.on_Close_no_ID,
                           "on_Close_about_dialog": self.on_Close_about_dialog,
                           "on_Close_dia_error_1": self.on_Close_dia_error_1,
                           "on_Close_dia_error_ID": self.on_Close_dia_error_ID,
@@ -51,6 +53,7 @@ class Handler:
         self.about_dialog = self.builder.get_object("about_dialog") 
         self.dia_error_1 = self.builder.get_object("dia_error_1")    
         self.dia_error_ID = self.builder.get_object("dia_error_ID")  
+        self.dialog_no_ID = self.builder.get_object("dialog_no_ID")  
         self.entry_RD = self.builder.get_object("entry_RD")
         self.entry_DB_1 = self.builder.get_object("entry_DB_1")
         self.entry_DB_2 = self.builder.get_object("entry_DB_2")           
@@ -134,7 +137,7 @@ class Handler:
 
         if registro is None:
 
-            self.dia_error_ID.show()
+            self.dialog_no_ID.show()
 
             return
 
@@ -253,6 +256,9 @@ class Handler:
     def on_accept_error_ID(self,*args):
         self.dia_error_ID.hide()
 
+    def on_accept_error_ID2(self,*args):
+        self.dialog_no_ID.hide()
+
 
     def on_Close_Dia_RD(self,*args):
 
@@ -261,15 +267,15 @@ class Handler:
 
 
     def on_Close_dia_error_1(self,*args):
-
         self.dia_error_1.hide()
 
-    def on_Close_dia_error_ID(self,*args):
+    def on_Close_no_ID(self,*args):
+        self.dialog_no_ID.hide()
 
+    def on_Close_dia_error_ID(self,*args):
         self.dia_error_ID.hide()
 
     def on_Close_about_dialog(self,*args):
-
         self.about_dialog.hide()
 
 
