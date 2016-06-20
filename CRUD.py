@@ -1,11 +1,19 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import gi
+gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+import MySQLdb as db
 
-import MySQLdb
+# Database 
+db_host = "localhost"
+db_user = "jose"
+db_pass = "cine"
+db_data = "DBdePeliculas"
 
-Conexion = MySQLdb.connect(host='localhost', user='jose',passwd='cine', db='DBdePeliculas')
-micursor = Conexion.cursor(MySQLdb.cursors.DictCursor)
+Conexion = db.connect(db_host,db_user,db_pass,db_data)
+micursor = Conexion.cursor(db.cursors.DictCursor)
 
 
 
@@ -43,7 +51,7 @@ class Handler:
                           "on_Close_dia_error_1": self.on_Close_dia_error_1,
                           "on_Close_dia_error_ID": self.on_Close_dia_error_ID,
                           "on_Close_Dia_RD": self.on_Close_Dia_RD }
-   
+
 
         # Conectamos las señales e iniciamos la aplicación
         self.builder.connect_signals(self.handlers)
@@ -234,7 +242,7 @@ class Handler:
         self.dia_CU.hide()    
 
 
-    def on_Close_Dia_CU(self):
+    def on_Close_Dia_CU(self,*args):
 
 
         self.entry_DB_1.set_text('') 

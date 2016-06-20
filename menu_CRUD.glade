@@ -119,7 +119,6 @@ El programa hace lo que se conoce como CRUD
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
     <property name="type_hint">dialog</property>
-    <signal name="destroy" handler="on_Close_dia_CU" swapped="no"/>
     <signal name="response" handler="on_Close_Dia_CU" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox3">
@@ -347,7 +346,6 @@ El programa hace lo que se conoce como CRUD
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
     <property name="type_hint">dialog</property>
-    <signal name="destroy" handler="on_Close_dia_RD" swapped="no"/>
     <signal name="response" handler="on_Close_Dia_RD" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
